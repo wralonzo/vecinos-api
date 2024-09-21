@@ -14,23 +14,15 @@ export const registerUserValidationRules = (additionalRules: any = null) => {
       },
       null,
     ),
-    genericStringRule(
-      "email",
-      {
-        requiredType: "string",
-        warnings:
-          "This field doesn't exist, is not a string, is empty or is not a valid email address.",
-      },
-      "^[^s@]+@[^s@]+.[^s@]+$",
-    ),
-    genericStringRule(
-      "password",
-      {
-        requiredType: "string",
-        warnings: "This field doesn't exist, is not a string, is empty or is not a valid password.",
-      },
-      "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$",
-    ),
+    genericStringRule("email", {
+      requiredType: "string",
+      warnings:
+        "This field doesn't exist, is not a string, is empty or is not a valid email address.",
+    }),
+    genericStringRule("password", {
+      requiredType: "string",
+      warnings: "This field doesn't exist, is not a string, is empty or is not a valid password.",
+    }),
     genericRolesRule(
       "role",
       {
