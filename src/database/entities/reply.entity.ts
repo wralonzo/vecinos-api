@@ -15,10 +15,10 @@ export class ReplyData {
   @Column({ nullable: true, type: "varchar", length: "100" })
   Filename?: string;
 
-  @Column({ default: () => "CURRENT_TIMESTAMP", nullable: false })
+  @Column({ nullable: true })
   CreatedAt!: Date;
 
-  @Column({ default: () => "CURRENT_TIMESTAMP", nullable: false })
+  @Column({ nullable: true })
   UpdatedAt!: Date;
 
   @ManyToOne(() => UserData, (user) => user.Id, { nullable: true })

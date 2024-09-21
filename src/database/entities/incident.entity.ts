@@ -31,9 +31,9 @@ export class IncidentData {
   @JoinColumn({ name: "StateId" })
   Status!: StateData;
 
-  @CreateDateColumn({ default: () => "CURRENT_TIMESTAMP", nullable: false })
+  @CreateDateColumn({ nullable: true })
   CreatedAt!: Date;
 
-  @UpdateDateColumn({ default: () => "CURRENT_TIMESTAMP", nullable: false })
+  @UpdateDateColumn({ nullable: true })
   UpdateddAt!: Date;
 }

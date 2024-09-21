@@ -8,6 +8,6 @@ export class RoleData {
   @Column({ nullable: false })
   Description!: string;
 
-  @Column({ default: () => "CURRENT_TIMESTAMP", nullable: false })
+  @Column({ nullable: true })
   CreatedAt!: Date;
 }

@@ -16,7 +16,7 @@ export class EvidenceData {
   @Column({ nullable: false })
   FileName!: string;
 
-  @CreateDateColumn({ default: () => "CURRENT_TIMESTAMP" })
+  @CreateDateColumn({ nullable: true })
   CreatedAt!: Date;
 
   @ManyToOne(() => ForumData, (forum) => forum.Id, { nullable: true })

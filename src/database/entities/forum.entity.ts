@@ -19,10 +19,10 @@ export class ForumData {
   @JoinColumn({ name: "AuthorId" })
   Author!: UserData;
 
-  @Column({ default: () => "CURRENT_TIMESTAMP", nullable: false })
+  @Column({ nullable: true })
   CreatedAt!: Date;
 
-  @Column({ default: () => "CURRENT_TIMESTAMP", nullable: false })
+  @Column({ nullable: true })
   UpdatedAt!: Date;
 
   @Column("bool", { default: true })

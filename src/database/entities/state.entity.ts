@@ -9,7 +9,7 @@ export class StateData {
   @Column({ nullable: false })
   Description!: string;
 
-  @Column({ default: () => "CURRENT_TIMESTAMP", nullable: false })
+  @Column({ nullable: true })
   CreatedAt!: Date;
 
   @OneToMany(() => IncidentData, (incident) => incident.Status, { nullable: true })

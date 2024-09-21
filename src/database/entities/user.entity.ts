@@ -18,7 +18,7 @@ export class UserData {
   @Column({ nullable: false })
   Password!: string;
 
-  @Column({ default: () => "CURRENT_TIMESTAMP", nullable: false })
+  @Column({ nullable: true })
   CreatedAt!: Date;
 
   @Column({ nullable: false, default: true })
