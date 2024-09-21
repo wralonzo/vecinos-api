@@ -34,10 +34,10 @@ export class EventData {
   @JoinColumn({ name: "StateId" })
   Status!: StateData;
 
-  @CreateDateColumn({ default: () => "CURRENT_TIMESTAMP", nullable: false })
+  @CreateDateColumn({ nullable: true })
   CreatedAt!: Date;
 
-  @UpdateDateColumn({ default: () => "CURRENT_TIMESTAMP", nullable: false })
+  @UpdateDateColumn({ nullable: true })
   UpdatedAt!: Date;
 
   @Column({ type: "datetime", nullable: false })
