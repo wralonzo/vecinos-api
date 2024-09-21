@@ -30,9 +30,9 @@ export class NotificationData {
   @Column({ type: "boolean", default: false })
   Deleted!: boolean;
 
-  @CreateDateColumn({ type: "datetime", default: () => "CURRENT_TIMESTAMP" })
+  @CreateDateColumn()
   CreatedAt!: Date;
 
-  @UpdateDateColumn({ type: "datetime", default: () => "CURRENT_TIMESTAMP" })
+  @UpdateDateColumn()
   UpdatedAt!: Date;
 }
