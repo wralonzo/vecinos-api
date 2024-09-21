@@ -1,0 +1,791 @@
+{
+	"info": {
+		"_postman_id": "8c169afa-3caf-4377-b355-dae9fcab3679",
+		"name": "Neighborhood.Forum.Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12269369"
+	},
+	"item": [
+		{
+			"name": "Registro",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"displayName\": \"Admin 1\",\r\n    \"email\": \"admin@gmail.com\",\r\n    \"password\": \"Password!234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{QA}}/auth/register",
+					"host": [
+						"{{QA}}"
+					],
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"authorization\", () => {\r",
+							"  const jsonResponse = pm.response.json();\r",
+							"\r",
+							"  const token = jsonResponse['authorization'];\r",
+							"  const refresh = jsonResponse['refresh'];\r",
+							"\r",
+							"  pm.environment.set(\"authorization\", token);\r",
+							"  pm.environment.set(\"refresh\", refresh);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"admin@gmail.com\",\r\n    // \"email\": \"vecino@gmail.com\",\r\n    \"password\": \"Password!234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{LOCAL}}/auth/login",
+					"host": [
+						"{{LOCAL}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Refresh",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{LOCAL}}/auth/refresh",
+					"host": [
+						"{{LOCAL}}"
+					],
+					"path": [
+						"auth",
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "IniciarForo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "evidence",
+							"type": "file",
+							"src": "/C:/Users/jimmy/Documents/test.PDF"
+						},
+						{
+							"key": "title",
+							"value": "test11",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "test11",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{QA}}/forum/create",
+					"host": [
+						"{{QA}}"
+					],
+					"path": [
+						"forum",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EditarForo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "39",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "Foro editado",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Foro editado",
+							"type": "text"
+						},
+						{
+							"key": "imagesToRemove",
+							"value": "1725762052032_test.PDF",
+							"type": "text"
+						},
+						{
+							"key": "evidence",
+							"type": "file",
+							"src": "/C:/Users/jimmy/Documents/test4.PDF"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{QA}}/forum/update",
+					"host": [
+						"{{QA}}"
+					],
+					"path": [
+						"forum",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EliminarForo",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"39\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{QA}}/forum/delete",
+					"host": [
+						"{{QA}}"
+					],
+					"path": [
+						"forum",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ObtenerForos",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{QA}}/forum/findPaginated?page=1&pageSize=1",
+					"host": [
+						"{{QA}}"
+					],
+					"path": [
+						"forum",
+						"findPaginated"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ResponderForo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "forumId",
+							"value": "39",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Respuesta 3",
+							"type": "text"
+						},
+						{
+							"key": "parentReplyId",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "evidence",
+							"type": "file",
+							"src": "/C:/Users/jimmy/Documents/test2.PDF"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{QA}}/reply/create",
+					"host": [
+						"{{QA}}"
+					],
+					"path": [
+						"reply",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ActualizarRespuesta",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "forumId",
+							"value": "39",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Respuesta Editada",
+							"type": "text"
+						},
+						{
+							"key": "replyId",
+							"value": "7",
+							"type": "text"
+						},
+						{
+							"key": "evidence",
+							"type": "file",
+							"src": "/C:/Users/jimmy/Documents/test4.PDF"
+						},
+						{
+							"key": "fileToRemove",
+							"value": "1725754189685_test.PDF",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{LOCAL}}/reply/update",
+					"host": [
+						"{{LOCAL}}"
+					],
+					"path": [
+						"reply",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ObtenerRespuestasPorForo",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{QA}}/reply/findPaginated/39?page=1&pageSize=10",
+					"host": [
+						"{{QA}}"
+					],
+					"path": [
+						"reply",
+						"findPaginated",
+						"39"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EliminarRespuestaForo",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"replyId\": 10,\r\n    \"forumId\": 39\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{QA}}/reply/delete",
+					"host": [
+						"{{QA}}"
+					],
+					"path": [
+						"reply",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CrearIncidente",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"Mucho ruido en calle 3\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{LOCAL}}/incident/create",
+					"host": [
+						"{{LOCAL}}"
+					],
+					"path": [
+						"incident",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ActualizarIncidente",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"status\": 3\r\n    // \"description\": \"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{QA}}/incident/update",
+					"host": [
+						"{{QA}}"
+					],
+					"path": [
+						"incident",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ObtenerIncidentes",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"status\": 2\r\n    // \"description\": \"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{QA}}/incident/findPaginated?page=1&pageSize=10",
+					"host": [
+						"{{QA}}"
+					],
+					"path": [
+						"incident",
+						"findPaginated"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						},
+						{
+							"key": "author",
+							"value": "2",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CrearEvento",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Evento 1\",\r\n    \"description\": \"Evento 1\",\r\n    \"eventAt\": \"2024-09-08T14:07:21.123Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{LOCAL}}/event/create",
+					"host": [
+						"{{LOCAL}}"
+					],
+					"path": [
+						"event",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ObtenerEventoPorId",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Evento 1\",\r\n    \"description\": \"Evento 1\",\r\n    \"eventAt\": \"2024-09-08T14:07:21.123Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{LOCAL}}/event/findById/1",
+					"host": [
+						"{{LOCAL}}"
+					],
+					"path": [
+						"event",
+						"findById",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EditarEvento",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"status\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{LOCAL}}/event/update",
+					"host": [
+						"{{LOCAL}}"
+					],
+					"path": [
+						"event",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ObtenerEventos",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{LOCAL}}/event/findPaginated?page=1&pageSize=10",
+					"host": [
+						"{{LOCAL}}"
+					],
+					"path": [
+						"event",
+						"findPaginated"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CrearNotificación",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"message\": \"Notificacion de prueba\",\r\n    \"user\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{LOCAL}}/notification/create",
+					"host": [
+						"{{LOCAL}}"
+					],
+					"path": [
+						"notification",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ActualizarNotificación",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 2,\r\n    // \"deleted\": true\r\n    \"viewed\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{LOCAL}}/notification/update",
+					"host": [
+						"{{LOCAL}}"
+					],
+					"path": [
+						"notification",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ObtenerNotificaciones",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{LOCAL}}/notification/findByUser",
+					"host": [
+						"{{LOCAL}}"
+					],
+					"path": [
+						"notification",
+						"findByUser"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{authorization}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "LOCAL",
+			"value": "http://localhost:3000/api",
+			"type": "string"
+		},
+		{
+			"key": "QA",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

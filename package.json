@@ -1,0 +1,76 @@
+{
+  "name": "neighborhood.forum.backend",
+  "version": "1.0.0",
+  "description": "API to handle neighborhood forum system",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --watch --config webpack/development.config.js",
+    "build": "webpack --config webpack/production.config.js",
+    "start": "node dist/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MegaGone/Neighborhood.Forum.Backend.git"
+  },
+  "keywords": [
+    "NodeJS",
+    "MySQL",
+    "TypeORM",
+    "Typescript",
+    "API",
+    "Swagger"
+  ],
+  "author": "J. Martinez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MegaGone/Neighborhood.Forum.Backend/issues"
+  },
+  "homepage": "https://github.com/MegaGone/Neighborhood.Forum.Backend#readme",
+  "dependencies": {
+    "@datalust/winston-seq": "^2.0.0",
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-validator": "6.14.2",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "multer": "1.4.5-lts.1",
+    "mysql": "^2.18.1",
+    "openapi-types": "^12.1.3",
+    "reflect-metadata": "^0.2.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "typeorm": "^0.3.20",
+    "winston": "^3.14.1"
+  },
+  "devDependencies": {
+    "@tsconfig/node20": "^20.1.4",
+    "@types/bcrypt": "^5.0.2",
+    "@types/cookie-parser": "^1.4.7",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/morgan": "^1.9.9",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^22.2.0",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.6",
+    "eslint": "^9.9.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "ignore-loader": "^0.1.2",
+    "nodemon": "^3.1.4",
+    "nodemon-webpack-plugin": "^4.8.2",
+    "prettier": "^3.3.3",
+    "terser-webpack-plugin": "^5.3.10",
+    "ts-loader": "^9.5.1",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths-webpack-plugin": "^4.1.0",
+    "typescript": "^5.5.4",
+    "webpack": "^5.93.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-node-externals": "^3.0.0"
+  }
+}
