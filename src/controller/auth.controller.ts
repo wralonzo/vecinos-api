@@ -64,6 +64,7 @@ export const signIn = async (req: Request, res: Response, next: NextFunction) =>
       })
       .json({ statusCode: STATUS_CODE.SUCCESSFULLY, refresh, authorization });
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };

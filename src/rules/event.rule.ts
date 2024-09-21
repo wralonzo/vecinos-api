@@ -18,14 +18,10 @@ export const createEventValidationRules = (additionalRules: any = null) => {
       },
       null,
     ),
-    genericStringRule(
-      "eventAt",
-      {
-        requiredType: "string",
-        warnings: "This field doesn't exist, is not a string or is empty.",
-      },
-      new RegExp(/\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/),
-    ),
+    genericStringRule("eventAt", {
+      requiredType: "string",
+      warnings: "This field doesn't exist, is not a string or is empty.",
+    }),
     ...newRules,
   ];
 };

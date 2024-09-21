@@ -17,6 +17,7 @@ export class EventService {
 
       return !Id || +Id <= 0 ? 0 : Id;
     } catch (error) {
+      console.log(error);
       throw new CustomError(STATUS_CODE.INTERNAL_SERVER_ERROR, "Internal server error");
     }
   }

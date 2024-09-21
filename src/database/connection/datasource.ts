@@ -35,7 +35,7 @@ export class MySQLDataSource {
       password: MYSQL_PASSWORD,
       database: MYSQL_DATABASE,
       cache: MYSQL_CACHE || MYSQL_CACHE === "true" ? true : false,
-      synchronize: MYSQL_SEED || MYSQL_SEED === "true" ? true : false,
+      synchronize: false,
       dropSchema: false,
       entities: [
         UserData,

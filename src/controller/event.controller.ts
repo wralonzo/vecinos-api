@@ -18,6 +18,7 @@ export const createEvent = async (req: Request, res: Response, next: NextFunctio
 
     return res.status(STATUS_CODE.SUCCESSFULLY).json({ statusCode: STATUS_CODE.SUCCESSFULLY, id });
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };

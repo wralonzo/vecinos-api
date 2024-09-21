@@ -40,15 +40,11 @@ export const signInValidationRules = (additionalRules: any = null) => {
   const newRules = additionalRules || [];
 
   return [
-    genericStringRule(
-      "email",
-      {
-        requiredType: "string",
-        warnings:
-          "This field doesn't exist, is not a string, is empty or is not a valid email address.",
-      },
-      "^[^s@]+@[^s@]+.[^s@]+$",
-    ),
+    genericStringRule("email", {
+      requiredType: "string",
+      warnings:
+        "This field doesn't exist, is not a string, is empty or is not a valid email address.",
+    }),
     genericStringRule(
       "password",
       {
