@@ -8,7 +8,8 @@ import { MULTER_MAXIMUN_ALLOWED_FILES } from "src/configuration";
 export const createForum = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { uid } = req;
-    const { files } = req;
+    const { file } = req;
+    console.log("console.log(files);", file);
     const { title, description } = req.body;
 
     const forumService: ForumService = await req.app.locals.forumService;
@@ -20,9 +21,10 @@ export const createForum = async (req: Request, res: Response, next: NextFunctio
       Description: description,
     });
 
-    const fileNames: Array<string> =
-      (files as Express.Multer.File[])?.map((f) => f?.filename) || [];
-    await evidenceService.insert(fileNames, id);
+    console.log(file);
+    if (file) {
+      await evidenceService.insertOne(file.filename, id);
+    }
 
     return res.status(STATUS_CODE.SUCCESSFULLY).json({ statusCode: STATUS_CODE.SUCCESSFULLY, id });
   } catch (error) {

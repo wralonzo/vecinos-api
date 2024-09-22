@@ -12,6 +12,9 @@ export class ReplyData {
   @Column({ nullable: false })
   ForumId!: number;
 
+  @Column({ nullable: false })
+  AuthorId!: number;
+
   @Column({ nullable: true, type: "varchar", length: "100" })
   Filename?: string;
 
@@ -22,8 +25,8 @@ export class ReplyData {
   UpdatedAt!: Date;
 
   @ManyToOne(() => UserData, (user) => user.Id, { nullable: true })
-  @JoinColumn({ name: "AuthorId" })
-  Author!: number;
+  @JoinColumn({ name: "AuthorId"})
+  Author!: UserData;
 
   @ManyToOne(() => ForumData, (forum) => forum.Id, { nullable: true })
   @JoinColumn({ name: "ForumId" })

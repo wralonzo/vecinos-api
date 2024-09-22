@@ -22,6 +22,7 @@ import {
   IncidentService,
   NotificationService,
 } from "src/service";
+import path, { join } from "path";
 
 export class Server {
   private readonly _port: string;
@@ -51,10 +52,15 @@ export class Server {
   }
 
   private _initRoutes(): void {
+    const fullPath = path.resolve(process.cwd());
+    this._app.use("/uploads", express.static(join(fullPath, "data")));
+    console.log("diranama",fullPath);
     this._app.use(this._routes);
-    this._app.use("/uploads", express.static("data"));
+    this._app.get("/", (req, res) => {
+      res.send('<h1>Bienvenido a la aplicación</h1><a href="/uploads/local.png">Ver Imagen</a>');
+    });
     this._app.use("/api/docs", this._docs.serve(), this._docs.setup());
-    this._app.use(ExceptionHandlerMiddleware);
+    // this._app.use(ExceptionHandlerMiddleware);
   }
 
   private async _initDatabase(): Promise<void> {

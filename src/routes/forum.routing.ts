@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { array } from "src/client";
+import { array, single } from "src/client";
 import { createForum, deleteForum, getForums, updateForum } from "src/controller";
 import { validateFields, validateJwt } from "src/middleware";
 import {
@@ -60,7 +60,7 @@ export class ForumRouter {
     router.post(
       "/create",
       validateJwt,
-      array,
+      single,
       createForumValidationRules(),
       validateFields,
       createForum,

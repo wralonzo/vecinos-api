@@ -18,12 +18,7 @@ const storage: StorageEngine = diskStorage({
 
 const single = multer({
   storage: storage,
-  fileFilter: (_req, file: IFile, cb) => {
-    if (!MULTER_ALLOWED_FILES.split(",").includes(file.mimetype ?? "")) return cb(null, false);
-
-    cb(null, true);
-  },
-}).single(MULTER_PARAM);
+}).single("evidence");
 
 const array = multer({
   storage: storage,

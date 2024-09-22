@@ -16,7 +16,7 @@ export const createReply = async (req: Request, res: Response, next: NextFunctio
 
     const replyService: ReplyService = await req.app.locals.replyService;
     const id: number = await replyService.insertRecord({
-      Author: +uid,
+      AuthorId: +uid,
       ForumId: +forum.Id,
       Filename: file?.filename,
       Description: description,

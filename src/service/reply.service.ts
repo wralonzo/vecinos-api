@@ -63,6 +63,11 @@ export class ReplyService {
         },
         take,
         skip,
+        [],
+        {
+          Author: true,
+          Forum: true,
+        },
       );
 
       return {
@@ -72,6 +77,7 @@ export class ReplyService {
         totalPages: Math.ceil(count / size),
       };
     } catch (error) {
+      console.log(error);
       throw new CustomError(STATUS_CODE.INTERNAL_SERVER_ERROR, "Internal server error");
     }
   }

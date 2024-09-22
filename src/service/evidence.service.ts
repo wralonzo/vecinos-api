@@ -41,6 +41,18 @@ export class EvidenceService {
     }
   }
 
+  public async insertOne(fileNames: string, forumId: number): Promise<boolean> {
+    try {
+      const { identifiers } = await this._evidenceRepository.insert({
+        FileName: fileNames,
+        ForumId: forumId,
+      });
+      return !identifiers || !identifiers?.length ? false : true;
+    } catch (error) {
+      throw new CustomError(STATUS_CODE.INTERNAL_SERVER_ERROR, "Internal server error");
+    }
+  }
+
   public async findMany(forumId: number): Promise<Array<EvidenceData> | null> {
     try {
       const records = await this._evidenceRepository.findAll(
