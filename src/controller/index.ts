@@ -4,3 +4,4 @@ export * from "./forum.contoller";
 export * from "./incident.controller";
 export * from "./notification.controller";
 export * from "./reply.controller";
+export * from "./valoracion.controller";

@@ -7,3 +7,5 @@ export * from "./reply.entity";
 export * from "./role.entity";
 export * from "./state.entity";
 export * from "./user.entity";
+export * from "./ask.entity";
+export * from "./valoracion.entity";

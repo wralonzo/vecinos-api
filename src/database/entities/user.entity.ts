@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
-import { ForumData, IncidentData, NotificationData } from "src/database/entities";
+import { ForumData, IncidentData, NotificationData, Valoracion } from "src/database/entities";
 
 @Entity("UserData")
 export class UserData {
@@ -35,4 +35,7 @@ export class UserData {
 
   @OneToMany(() => NotificationData, (notification) => notification.User)
   Notifications?: Array<NotificationData>;
+
+  @OneToMany(() => Valoracion, (ask) => ask.idUserFk, { nullable: true })
+  idUserFk?: Array<Valoracion>;
 }

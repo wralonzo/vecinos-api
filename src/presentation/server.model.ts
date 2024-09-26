@@ -23,6 +23,7 @@ import {
   NotificationService,
 } from "src/service";
 import path, { join } from "path";
+import { ValoracionService } from "src/service/valoracion.service";
 
 export class Server {
   private readonly _port: string;
@@ -54,7 +55,7 @@ export class Server {
   private _initRoutes(): void {
     const fullPath = path.resolve(process.cwd());
     this._app.use("/uploads", express.static(join(fullPath, "data")));
-    console.log("diranama",fullPath);
+    console.log("diranama", fullPath);
     this._app.use(this._routes);
     this._app.get("/", (req, res) => {
       res.send('<h1>Bienvenido a la aplicación</h1><a href="/uploads/local.png">Ver Imagen</a>');
@@ -80,6 +81,7 @@ export class Server {
     this._app.locals.evidenceService = await new EvidenceService(this._datasource.client);
     this._app.locals.incidentService = await new IncidentService(this._datasource.client);
     this._app.locals.notificationService = await new NotificationService(this._datasource.client);
+    this._app.locals.insertService = await new ValoracionService(this._datasource.client);
   }
 
   public async start(): Promise<void> {

@@ -21,6 +21,8 @@ import {
   EvidenceData,
   IncidentData,
   NotificationData,
+  Ask,
+  Valoracion,
 } from "src/database/entities";
 
 export class MySQLDataSource {
@@ -34,7 +36,6 @@ export class MySQLDataSource {
       username: MYSQL_USER,
       password: MYSQL_PASSWORD,
       database: MYSQL_DATABASE,
-      cache: MYSQL_CACHE || MYSQL_CACHE === "true" ? true : false,
       synchronize: false,
       dropSchema: false,
       entities: [
@@ -47,6 +48,8 @@ export class MySQLDataSource {
         EvidenceData,
         IncidentData,
         NotificationData,
+        Ask,
+        Valoracion
       ],
       extra: {
         validateConnection: false,
