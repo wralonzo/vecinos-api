@@ -62,7 +62,13 @@ export const signIn = async (req: Request, res: Response, next: NextFunction) =>
         secure: NODE_ENV === "production",
         maxAge: +REFRESH_JWT_EXPIRATION_IN_MS,
       })
-      .json({ statusCode: STATUS_CODE.SUCCESSFULLY, refresh, authorization });
+      .json({
+        statusCode: STATUS_CODE.SUCCESSFULLY,
+        refresh,
+        idUser: user.Id,
+        name: user.Email,
+        authorization,
+      });
   } catch (error) {
     console.log(error);
     next(error);

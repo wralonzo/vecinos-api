@@ -38,6 +38,7 @@ export class ValoracionService {
         skip,
         [],
         {
+          idUserFk: true,
           askFk: true,
         },
       );
