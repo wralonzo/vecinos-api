@@ -1,20 +1,36 @@
 import { DataSource, In } from "typeorm";
 import { CustomError } from "src/model";
 import { ROLE_ENUM_TYPE, STATUS_CODE } from "src/enums";
-import { ReplyData, BaseRepository } from "src/database";
+import { ReplyData, BaseRepository, UserData } from "src/database";
+import EmailService from "./notificationmail.service";
 
 export class ReplyService {
   private readonly _replyRepository: BaseRepository<ReplyData>;
+  private readonly userRepository: BaseRepository<UserData>;
 
   constructor(private readonly _datasource: DataSource) {
     this._replyRepository = new BaseRepository(this._datasource, ReplyData);
+    this.userRepository = new BaseRepository(this._datasource, UserData);
   }
 
   public async insertRecord(reply: Partial<ReplyData>): Promise<number> {
     try {
       const { identifiers } = await this._replyRepository.insert(reply);
       const { Id } = identifiers[0];
-
+      const dataUser = await this.userRepository.findAll(
+        {},
+        {
+          CreatedAt: "DESC",
+        },
+      );
+      const emailUsers = dataUser.map((item) => {
+        return item.Email;
+      });
+      await new EmailService().sendMail(
+        reply.Description ?? "",
+        emailUsers,
+        reply.Description ?? "",
+      );
       return !Id || +Id <= 0 ? 0 : Id;
     } catch (error) {
       throw new CustomError(STATUS_CODE.INTERNAL_SERVER_ERROR, "Internal server error");
