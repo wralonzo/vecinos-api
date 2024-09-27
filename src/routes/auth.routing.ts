@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { refreshToken, registerUser, signIn } from "src/controller";
+import { findUser, refreshToken, registerUser, signIn, updateUser } from "src/controller";
 import { validateFields } from "src/middleware";
 import {
   refreshTokenValidationRules,
@@ -151,6 +151,9 @@ export class AuthRouter {
      *        $ref: '#/components/responses/InternalException'
      */
     router.get("/refresh", refreshTokenValidationRules(), validateFields, refreshToken);
+
+    router.post("/update", updateUser);
+    router.get("/find/:id", findUser);
 
     return router;
   }

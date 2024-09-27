@@ -93,3 +93,36 @@ export const refreshToken = async (req: Request, res: Response, next: NextFuncti
     next(error);
   }
 };
+export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const authService: AuthService = req.app.locals.authService;
+
+    const user = await authService.findUserId(req.body.Id);
+    if (!user) throw new CustomError(STATUS_CODE.NOT_FOUND, "Event not found.");
+    if (req.body.Password) {
+      req.body.Password = await BCryptExtension.hash(req.body.Password);
+    } else {
+      req.body.Password = undefined;
+    }
+    await authService.update(user.Id, req.body);
+
+    return res.status(STATUS_CODE.SUCCESSFULLY).json({ statusCode: STATUS_CODE.SUCCESSFULLY });
+  } catch (error) {
+    next(error);
+  }
+};
+export const findUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { id } = req.params;
+
+    const authService: AuthService = req.app.locals.authService;
+
+    const user = await authService.findUserId(+id);
+
+    return res
+      .status(STATUS_CODE.SUCCESSFULLY)
+      .json({ statusCode: STATUS_CODE.SUCCESSFULLY, user });
+  } catch (error) {
+    next(error);
+  }
+};

@@ -1,12 +1,15 @@
 import { DataSource } from "typeorm";
-import { ForumData, BaseRepository } from "src/database";
+import { ForumData, BaseRepository, UserData } from "src/database";
 import { CustomError } from "src/model";
 import { ROLE_ENUM_TYPE, STATUS_CODE } from "src/enums";
+import EmailService from "./notificationmail.service";
 
 export class ForumService {
   private readonly _forumRepository: BaseRepository<ForumData>;
+  private readonly userRepository: BaseRepository<UserData>;
 
   constructor(private readonly _datasource: DataSource) {
+    this.userRepository = new BaseRepository(this._datasource, UserData);
     this._forumRepository = new BaseRepository(this._datasource, ForumData);
   }
 
@@ -14,7 +17,16 @@ export class ForumService {
     try {
       const { identifiers } = await this._forumRepository.insert(forum);
       const { Id } = identifiers[0];
-
+      const dataUser = await this.userRepository.findAll(
+        {},
+        {
+          CreatedAt: "DESC",
+        },
+      );
+      const emailUsers = dataUser.map((item) => {
+        return item.Email;
+      });
+      await new EmailService().sendMail(forum.Title ?? "", emailUsers, forum.Description ?? "");
       return !Id || +Id <= 0 ? 0 : Id;
     } catch (error) {
       throw new CustomError(STATUS_CODE.INTERNAL_SERVER_ERROR, "Internal server error");

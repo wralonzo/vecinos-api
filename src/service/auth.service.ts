@@ -28,4 +28,29 @@ export class AuthService {
       return null;
     }
   }
+
+  public async findUserId(id: number): Promise<UserData | null> {
+    try {
+      const neighborhood: UserData | null = await this._authRepository.findOne({ Id: id });
+
+      return !neighborhood ? null : neighborhood;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  public async update(id: number, data: Partial<UserData>): Promise<boolean> {
+    try {
+      const { affected } = await this._authRepository.update(
+        {
+          Id: id,
+        },
+        data,
+      );
+
+      return affected && affected >= 1 ? true : false;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
