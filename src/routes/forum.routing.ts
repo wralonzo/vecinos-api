@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { array, single } from "src/client";
-import { createForum, deleteForum, getForums, updateForum } from "src/controller";
+import { createForum, deleteForum, generateDataPDF, getForums, updateForum } from "src/controller";
 import { validateFields, validateJwt } from "src/middleware";
 import {
   createForumValidationRules,
@@ -211,6 +211,7 @@ export class ForumRouter {
       validateFields,
       getForums,
     );
+    router.get("/pdf", generateDataPDF);
 
     return router;
   }

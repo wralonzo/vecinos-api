@@ -1,5 +1,12 @@
 import { Router } from "express";
-import { findUser, refreshToken, registerUser, signIn, updateUser } from "src/controller";
+import {
+  findUser,
+  refreshToken,
+  registerUser,
+  signIn,
+  updateUser,
+  generateUserDataPDF,
+} from "src/controller";
 import { validateFields } from "src/middleware";
 import {
   refreshTokenValidationRules,
@@ -154,6 +161,7 @@ export class AuthRouter {
 
     router.post("/update", updateUser);
     router.get("/find/:id", findUser);
+    router.get("/pdf/", generateUserDataPDF);
 
     return router;
   }

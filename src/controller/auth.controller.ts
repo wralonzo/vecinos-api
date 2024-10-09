@@ -5,6 +5,7 @@ import { ROLE_ENUM_TYPE, STATUS_CODE } from "src/enums";
 import { CustomError } from "src/model";
 import { AuthService } from "src/service";
 import { NODE_ENV, REFRESH_JWT_EXPIRATION, REFRESH_JWT_EXPIRATION_IN_MS } from "src/configuration";
+import PDFDocument from "pdfkit";
 
 export const registerUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -124,5 +125,50 @@ export const findUser = async (req: Request, res: Response, next: NextFunction) 
       .json({ statusCode: STATUS_CODE.SUCCESSFULLY, user });
   } catch (error) {
     next(error);
+  }
+};
+
+export const generateUserDataPDF = async (req: Request, res: Response, next: NextFunction) => {
+  const doc = new PDFDocument();
+  res.setHeader("Content-Type", "application/pdf");
+  res.setHeader("Content-Disposition", "inline; filename=reporte_usuarios.pdf");
+  doc.pipe(res);
+  doc.fontSize(20).text("Reporte de usuarios", { align: "center" });
+  doc.moveDown(2);
+
+  try {
+    const authService: AuthService = req.app.locals.authService;
+    const usuarios = await authService.findAll();
+    const tableTop = 100;
+    const itemHeight = 20;
+    doc.fontSize(10);
+    doc.text("ID", 50, tableTop);
+    doc.text("Nombre", 100, tableTop);
+    doc.text("Correo", 210, tableTop);
+    doc.text("Rol", 475, tableTop);
+
+    doc
+      .moveTo(50, tableTop + 15)
+      .lineTo(550, tableTop + 15)
+      .stroke();
+    let position = tableTop + 30;
+    usuarios.forEach((usuario) => {
+      doc.text(usuario.Id.toString(), 50, position);
+      doc.text(usuario.DisplayName, 100, position);
+      doc.text(usuario.Email, 210, position);
+      doc.text(usuario.Role === 1 ? "Admin" : "Vecino", 475, position);
+      doc
+        .moveTo(50, position + 15)
+        .lineTo(550, position + 15)
+        .stroke();
+
+      position += itemHeight;
+    });
+
+    // Finaliza el documento
+    doc.end();
+  } catch (error) {
+    console.error("Error al generar el reporte:", error);
+    res.status(500).send("Error al generar el reporte.");
   }
 };

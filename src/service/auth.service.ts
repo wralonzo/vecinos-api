@@ -53,4 +53,19 @@ export class AuthService {
       throw error;
     }
   }
+
+  public async findAll(): Promise<UserData[] | []> {
+    try {
+      const data = await this._authRepository.findAll(
+        {},
+        {
+          CreatedAt: "ASC",
+        },
+      );
+
+      return !data ? [] : data;
+    } catch (error) {
+      return [];
+    }
+  }
 }

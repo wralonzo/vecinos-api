@@ -4,6 +4,7 @@ import { Request, Response, NextFunction } from "express";
 import { EvidenceService, ForumService, ReplyService } from "src/service";
 import { CustomError } from "src/model";
 import { MULTER_MAXIMUN_ALLOWED_FILES } from "src/configuration";
+import PDFDocument from "pdfkit";
 
 export const createForum = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -147,5 +148,56 @@ export const getForums = async (req: Request, res: Response, next: NextFunction)
     });
   } catch (error) {
     next(error);
+  }
+};
+
+export const generateDataPDF = async (req: Request, res: Response, next: NextFunction) => {
+  const doc = new PDFDocument();
+  res.setHeader("Content-Type", "application/pdf");
+  res.setHeader("Content-Disposition", "inline; filename=reporte_foros.pdf");
+  doc.pipe(res);
+  doc.fontSize(20).text("Reporte de Foros", { align: "center" });
+  doc.moveDown(2);
+
+  try {
+    const forumService: ForumService = await req.app.locals.forumService;
+    const usuarios = await forumService.findAll();
+    const tableTop = 100;
+    const itemHeight = 20;
+    doc.fontSize(10);
+    doc.text("ID", 50, tableTop);
+    doc.text("Titulo", 100, tableTop);
+    doc.text("Descripcion", 210, tableTop);
+    doc.text("Vecino", 330, tableTop);
+    doc.text("Fecha", 415, tableTop);
+
+    doc
+      .moveTo(50, tableTop + 15)
+      .lineTo(550, tableTop + 15)
+      .stroke();
+    let position = tableTop + 30;
+    usuarios.forEach((foro) => {
+      doc.text(foro.Id.toString(), 50, position);
+      doc.text(foro.Title, 100, position);
+      doc.text(foro.Description, 210, position);
+      doc.text(foro.Author.DisplayName, 330, position);
+      doc.text(
+        foro.CreatedAt ? foro.CreatedAt.toISOString() : new Date().toISOString(),
+        415,
+        position,
+      );
+      doc
+        .moveTo(50, position + 15)
+        .lineTo(550, position + 15)
+        .stroke();
+
+      position += itemHeight;
+    });
+
+    // Finaliza el documento
+    doc.end();
+  } catch (error) {
+    console.error("Error al generar el reporte:", error);
+    res.status(500).send("Error al generar el reporte.");
   }
 };

@@ -96,4 +96,23 @@ export class ForumService {
       throw new CustomError(STATUS_CODE.INTERNAL_SERVER_ERROR, "Internal server error");
     }
   }
+
+  public async findAll(): Promise<ForumData[] | []> {
+    try {
+      const data = await this._forumRepository.findAll(
+        {},
+        {
+          CreatedAt: "ASC",
+        },
+        [],
+        {
+          Author: true,
+        },
+      );
+
+      return !data ? [] : data;
+    } catch (error) {
+      return [];
+    }
+  }
 }
